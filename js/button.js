@@ -16,6 +16,8 @@ function Button(button) {
     this.idArray = [parseInt(idArrayString[0]), parseInt(idArrayString[1])];
     //the picture or lack of it
     this.img = $(button).children(':first').attr('src');
+    
+    this.isEmpty=false;
 }
 
 function Table(name) {
@@ -70,7 +72,11 @@ $("#tableTemp").append('I: '+i+'<img src="'+this.tableButtons[i][j].img+'">'
        isReachable=true;
     
            } 
-     
+      if ((button1.idArray[0]===0 ||  button1.idArray[0]===3 || button1.idArray[1]===0 ||  button1.idArray[1]===3)
+              && (button2.idArray[0]===0 ||  button2.idArray[0]===3 || button2.idArray[1]===0 ||  button2.idArray[1]===3))
+      {
+            isReachable=true;
+      }
       return isReachable;
      
     };
@@ -84,6 +90,8 @@ $("#tableTemp").append('I: '+i+'<img src="'+this.tableButtons[i][j].img+'">'
     var text2ButtonTextId='#'+temp2Button.textId; 
     $(text1ButtonTextId).children('img').remove();
       $(text2ButtonTextId).children('img').remove();
+      temp1Button.isEmpty=true;
+      temp2Button.isEmpty=true;
        $('#aitemp').html('<img src="'+temp1Button.img+'">'+button1.idArray[0]+button1.idArray[1]+'<img src="'+temp2Button.img+'">'
              +button2.idArray[0]+button2.idArray[1]); 
       
