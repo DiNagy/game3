@@ -16,9 +16,10 @@ function Button(button) {
     this.idArray = [parseInt(idArrayString[0]), parseInt(idArrayString[1])];
     //the picture or lack of it
     this.img = $(button).children(':first').attr('src');
-    
-    this.isEmpty=false;
+
+    this.isReachable = false;
 }
+
 
 function Table(name) {
     //creates the table of the game
@@ -30,7 +31,9 @@ function Table(name) {
 
     //number of rows and collumns   
     var numberOfRows = $(tableNameTr).length;
+  //  rows=numberOfRows;
     var numberOfCells = Math.floor(tableCells.length / numberOfRows);
+   //  columns=numberOfCells;
 
     //the matrix represents the table of the game
     //create the empty matrix
@@ -43,65 +46,85 @@ function Table(name) {
     var tempButton;
     for (var i = 0; i < tableCells.length; i++) {
         tempButton = new Button((tableCells[i]));
-        //add all of them to bottom cose
-        this.tableButtons[tempButton.idArray[0]][ tempButton.idArray[1]] = tempButton;
-        
-    }
-    //*******************************************
-    
-      
-    for (var i = 0; i < numberOfRows; i++) {     
-    for (var j=0; j<4;j++){
-$("#tableTemp").append('I: '+i+'<img src="'+this.tableButtons[i][j].img+'">'
-        +this.tableButtons[i][j].idArray[0]+this.tableButtons[i][j].idArray[1]);
-    }}
-     //**********************************************************************
-    this.checkReachable = function (button1, button2) {
-        var isReachable=false;
-    //if next to each other left right
-    if (button1.idArray[0]===button2.idArray[0] &&
-         ( button1.idArray[1]===button2.idArray[1]+1 ||
-           button1.idArray[1]===button2.idArray[1]-1)){
-       isReachable=true;
-      
-           }
-        //if next to each other up and down
-          if (button1.idArray[1]===button2.idArray[1] &&
-         ( button1.idArray[0]===button2.idArray[0]+1 ||
-           button1.idArray[0]===button2.idArray[0]-1)){
-       isReachable=true;
-    
-           } 
-      if ((button1.idArray[0]===0 ||  button1.idArray[0]===3 || button1.idArray[1]===0 ||  button1.idArray[1]===3)
-              && (button2.idArray[0]===0 ||  button2.idArray[0]===3 || button2.idArray[1]===0 ||  button2.idArray[1]===3))
-      {
-            isReachable=true;
-      }
-      return isReachable;
-     
-    };
-    this.removeButtons=function(button1,button2){
-         
-        
-     var temp1Button=   this.tableButtons[button1.idArray[0]][button1.idArray[1]];
-  
-      var temp2Button=   this.tableButtons[button2.idArray[0]][button2.idArray[1]];
-   var text1ButtonTextId='#'+temp1Button.textId;
-    var text2ButtonTextId='#'+temp2Button.textId; 
-    $(text1ButtonTextId).children('img').remove();
-      $(text2ButtonTextId).children('img').remove();
-      temp1Button.isEmpty=true;
-      temp2Button.isEmpty=true;
-       $('#aitemp').html('<img src="'+temp1Button.img+'">'+button1.idArray[0]+button1.idArray[1]+'<img src="'+temp2Button.img+'">'
-             +button2.idArray[0]+button2.idArray[1]); 
-      
-        
-        delete  temp1Button.img;
-        delete  temp1Button.img;
-     
-  
-    //img:  $(b).children(':first')
-   // button1.html('jjjj');
 
+        if (tempButton.idArray[0] === 0 || tempButton.idArray[0] === (numberOfRows-1)
+                || tempButton.idArray[1] === 0 || tempButton.idArray[1] === (numberOfCells-1)
+                ) {
+            tempButton.isReachable = true;
+        }
+        this.tableButtons[tempButton.idArray[0]][ tempButton.idArray[1]] = tempButton;
+
+    }
+
+    this.checkReachable = function (button1, button2) {
+        var isReachable = false;
+        //if next to each other left right
+        if (button1.idArray[0] === button2.idArray[0] &&
+                (button1.idArray[1] === button2.idArray[1] + 1 ||
+                        button1.idArray[1] === button2.idArray[1] - 1)) {
+            isReachable = true;
+
+        }
+        //if next to each other up and down
+        if (button1.idArray[1] === button2.idArray[1] &&
+                (button1.idArray[0] === button2.idArray[0] + 1 ||
+                        button1.idArray[0] === button2.idArray[0] - 1)) {
+            isReachable = true;
+
+        }
+        //if both of them are reachable
+        if ((this.tableButtons[button1.idArray[0]][button1.idArray[1]].isReachable)
+                && (this.tableButtons[button2.idArray[0]][button2.idArray[1]]).isReachable) {
+            isReachable = true;
+        }
+
+        return isReachable;
+
+    };
+
+
+    this.removeButtons = function (button1, button2) {
+        var tempButton1 = this.tableButtons[button1.idArray[0]][button1.idArray[1]];
+        var tempButton2 = this.tableButtons[button2.idArray[0]][button2.idArray[1]];
+
+
+        var tempIdImg1 = '#' + tempButton1.textId + ' img';
+        var tempIdImg2 = '#' + tempButton2.textId + ' img';
+
+
+        $(tempIdImg1).fadeOut('slow');
+        $(tempIdImg2).fadeOut('slow');
+
+
+        this.reachChange(button1.idArray[0], button1.idArray[1]);
+        this.reachChange(button2.idArray[0], button2.idArray[1]);
+        
+        if (step < 85) {
+            step = step + 15;
+        }
+    };
+    this.reachChange = function (x, y) {
+
+
+        if (x > 0) {
+
+            this.tableButtons[x - 1][y].isReachable = true;
+
+        }
+        if (x < (numberOfRows-1)) {
+
+            this.tableButtons[x + 1][y].isReachable = true;
+
+        }
+        if (y > 0) {
+
+            this.tableButtons[x][y - 1].isReachable = true;
+
+        }
+        if (y < (numberOfCells-1)) {
+
+            this.tableButtons[x][y + 1].isReachable = true;
+
+        }
     };
 }

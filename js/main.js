@@ -11,6 +11,10 @@ $(document).ready(function () {
     $('.td').click(function (e) {
 
         $('#temp').text(this.id + ' ' + ai(this));
+        
+         var inner = $('#inner');
+  
+  reduceHeight(inner, 20);
 
     });
 });
@@ -19,92 +23,43 @@ function ai(b) {
     //two cells are the same (clik on the same again)
     if (button) {
         if (button.id === b.id) {
-            $(button).removeClass('choosen');
+            $(button).removeClass('chosen');
             button = null;
-          
-            return 'the same';
+            return 'The buttons are the same buton';
 
         }
-     //two DIFFERENT active cell 
+        //two DIFFERENT active cell 
 
-        var text = '#' + button.id;
-        //text+=b.id;
+
         var img1 = $(b).children(':first').attr('src');
         var img2 = $(button).children(':first').attr('src');
-        $(button, b).removeClass('choosen');
-        var b1=button;
+        $(button, b).removeClass('chosen');
+        var b1 = button;
         button = null;
 
-        if (img1 === img2) {
-           // reachability(b1,b);
-           if (table==null){
-          table=new Table('mainTable');
-      }
-           var button1=new Button(b);
-           var button2=new Button(b1);
-       if( table.checkReachable(button1,button2)){
-           table.removeButtons(button2,button1);
-              return 'yes it is removable reachable OK 1:'+b.id+' :2:'+b1.id;
-       }
-                  return 'yes not reachable YET!!!';
-                  
-       //check for reachability#/*
-       /*
-       if (reachability(button,b)){
-            return 'yes it is what it is';
-        }
-        else {
-            return 'not reachable';
-        }*/
+        if (img1 === img2 && img1) {
+            // reachability(b1,b);
+            if (!table) {
+                table = new Table('mainTable');
+            }
+            var button1 = new Button(b);
+            var button2 = new Button(b1);
+            if (table.checkReachable(button1, button2)) {
+                table.removeButtons(button1, button2);
+                return 'yes it is removable reachable OK';
+            }
+
         }
         //two cells have different pictures
-        return 'not at all';
+        return 'The buttons have different pictures';
     } else {
-//the first active cell is choosen
+//the first active cell is chosen
+   var img=$(b).children(':first').attr('src');
+if ($(b).children(':first').attr('src')){
         button = b;
-        $(button).addClass('choosen');
-         
-        return 'only one';
+        $(button).addClass('chosen');
+        return 'The first button is '+img;
+        }
     }
 }
-function reachability(b1,b){
-    /**
-     * This is already tested, the two buttons are the same
-     */
-   //    $("aitemp").text(button.id+'OK'+b.id);
-    var id1=b1.id;
-    var id2=b.id;
-     var buttonArray1= id1.split('_');
-        var buttonArray2= id2.split('_');
-        buttonArray1[0]=parseInt(buttonArray1[0]);
-        buttonArray2[0]=parseInt(buttonArray2[0]);
-        
-      
-        buttonArray1[1]=parseInt(buttonArray1[1]);
-        buttonArray2[1]=parseInt(buttonArray2[1]);
-      if (buttonArray1[0]===buttonArray2[0])
-          
-              {  
-                  if (buttonArray1[1]===1+(buttonArray2[1]) || buttonArray1[1]===(buttonArray2[1])-1)
-                  {
-    $("#aitemp").text('next to each other1');
-                  }
-       
-      }
-       if (buttonArray1[1]===buttonArray2[1])
-          
-              {  
-                  if (buttonArray1[0]===1+(buttonArray2[0]) || buttonArray1[0]===(buttonArray2[0])-1)
-                  {
-    $("#aitemp").text('next to up and down');
-                  }
-       
-      }
-  //  if (id1===id2){
-   //     return false;
-  //  }
- 
-   
-   
-    return true;
-}
+

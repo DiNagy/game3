@@ -1,5 +1,7 @@
-
-<?php
-
-echo '<div id="header">HEAD HERE<div>';
-?>
+<header>
+    <ul>
+        <li>Help +ikon</li>
+        <li>Play Game +ikon</li>
+    </ul>
+    
+</header>

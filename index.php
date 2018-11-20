@@ -10,7 +10,7 @@ and open the template in the editor.
         <title>Game on the move</title>
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body
+    <body>
         <?php
         require_once 'parts/header.php';
 
@@ -18,11 +18,14 @@ and open the template in the editor.
 
         require_once 'parts/footer.php';
         ?>
-        <div id="tableTemp">Table</div>
-        <div id="temp"></div>
-        <div id="aitemp">Here Ai temp</div>
+        
+        <div id="temp">Valami</div>
+        
+        
         <script src="js/jquery-3.3.1.min.js"></script>
+              <script src="js/timer.js"></script>
         <script src="js/button.js"></script>
         <script src="js/main.js"></script>
+  
     </body>
 </html>
