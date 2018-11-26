@@ -20,6 +20,7 @@ and open the template in the editor.
         ?>
         
         <div id="temp">Valami</div>
+          <div id="temp2">Valami</div>
         
         
         <script src="js/jquery-3.3.1.min.js"></script>

@@ -25,7 +25,7 @@ function Table(name) {
     //creates the table of the game
     var tableNameTrTd = '#' + name + ' tr td';
     var tableNameTr = '#' + name + ' tr ';
-
+this.counting=tableNameTrTd.length;
     // the cells of the table
     var tableCells = $(tableNameTrTd);
 
@@ -98,11 +98,27 @@ function Table(name) {
 
         this.reachChange(button1.idArray[0], button1.idArray[1]);
         this.reachChange(button2.idArray[0], button2.idArray[1]);
+        //
+        
+
         
         if (step < 85) {
             step = step + 15;
         }
+        
+        //when this goes to 0 call "you won"        
+       this.counting-=2;
+         $('#temp2').text('you won'+this.counting);
+        if(this.counting<1){
+            this.youWon();
+        }
     };
+    
+    this.youWon = function(){
+        $('#temp2').text('you won!!!!!');
+     //   $('#mainTable').remove();
+    };
+    
     this.reachChange = function (x, y) {
 
 

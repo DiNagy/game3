@@ -49,8 +49,8 @@ $tempArrayhalfBig = ["pictures/ping.png",
     "pictures/cartoon-penguin-png-8.png"];
 
 //echo '<div> server:'.$_GET['columns'].'</div>';
-$rows=8;
-$columns=10;
+$rows=4;//8
+$columns=4;//10
 $type='pinguins';//only option now
 if (($rows*$columns)>(count($tempArrayhalfBig)*2)){
     $tempArrayhalf=array_merge($tempArrayhalfBig,array_slice($tempArrayhalfBig,0,16));
